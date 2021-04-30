@@ -2,6 +2,19 @@
 <html lang=en>
   <head>
     <script src=https://apis.google.com/js/api.js></script>
+    <style>
+      iframe {
+        border: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id=content></iframe>
     <script>
       const params = new URLSearchParams(document.location.search)
       gapi.load('client', () => {
@@ -13,12 +26,13 @@
             fileId: params.get('id'),
             alt: 'media'
           }).then(response => {
-            document.open()
-            document.write(response.body)
-            document.close()
+            const doc = document.getElementById('content').contentWindow.document
+            doc.open()
+            doc.write(response.body)
+            doc.close()
           })
         })
       })
     </script>
-  </head>
+  </body>
 </html>
