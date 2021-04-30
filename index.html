@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang=en>
+  <head>
+    <script src=https://apis.google.com/js/api.js></script>
+    <script>
+      const params = new URLSearchParams(document.location.search)
+      gapi.load('client', () => {
+        gapi.client.init({
+          apiKey: params.get('key'),
+          discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+        }).then(() => {
+          gapi.client.drive.files.get({
+            fileId: params.get('id'),
+            alt: 'media'
+          }).then(response => {
+            document.open()
+            document.write(response.body)
+            document.close()
+          })
+        })
+      })
+    </script>
+  </head>
+</html>
